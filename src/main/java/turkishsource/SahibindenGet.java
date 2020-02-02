@@ -9,6 +9,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class SahibindenGet {
 
@@ -20,17 +21,21 @@ public class SahibindenGet {
     Elements titleElements = doc.select("tbody.searchResultsRowClass > tr.searchResultsItem > td");
 
     final ArrayList<SatilikDaire> satilikDaires = new ArrayList<>();
-    for (int i = 0; i < 20; i++) {
+
       SatilikDaire satilikDaire = new SatilikDaire();
 
       for (Element element : titleElements) {
 
         if (!element.getElementsByClass("searchResultsTitleValue leafContent").isEmpty()) {
+
           satilikDaire.setIlanBaslik(element.text());
         }
         else if (!element.getElementsByClass("searchResultsAttributeValue").isEmpty()){
-          satilikDaire.setIlanAlan(element.getElementsByClass("searchResultsAttributeValue").first().text());
-          satilikDaire.setIlanOdaSayisi(element.getElementsByClass("searchResultsAttributeValue").last().text());
+          if(Objects.isNull(satilikDaire.getIlanAlan())){
+            satilikDaire.setIlanOdaSayisi(element.text());
+          }
+          satilikDaire.setIlanAlan(element.text());
+
         }
         else if (!element.getElementsByClass("searchResultsPriceValue").isEmpty()){
           satilikDaire.setIlanIlanFiyat(element.text());
@@ -41,17 +46,20 @@ public class SahibindenGet {
         else if (!element.getElementsByClass("searchResultsLocationValue").isEmpty()){
           satilikDaire.setIlanIlIlce(element.text());
           satilikDaires.add(satilikDaire);
+          satilikDaire=new SatilikDaire();
 
-          break;
+
         }
 
-      }
+
 
     }
     System.out.println(satilikDaires.size());
 
     for (SatilikDaire sa : satilikDaires){
-      System.out.println("Baslik:"+sa.getIlanBaslik());
+      System.out.println("Baslik "+sa.getIlanBaslik()+" Alan: "+sa.getIlanAlan()+" Oda "+sa.getIlanOdaSayisi()+ " Fiyat :"+
+          sa.getIlanIlanFiyat()+" Tarih :"+ sa.getIlanTarihi()+" İl İlçe :"+sa.getIlanIlIlce()+"\n");
+
     }
   }
 }
