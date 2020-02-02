@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="WebScrabi" target="1.5" />
+      <module name="WebScrabi" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>
