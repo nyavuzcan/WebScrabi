@@ -1,17 +1,20 @@
-package com.openhere;
+package com;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import com.sahibinden.InquireKiralikDaireImpl;
+import com.sahibindenService.InquireKiralikDaire;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 
 public class Main {
   private static final String baseUrl = "https://www.sahibinden.com/satilik-daire";
 
-  public static void main(String[] args) throws IOException {
+  private InquireKiralikDaire inquireKiralikDaire = new InquireKiralikDaireImpl();
 
+  public static void main(String[] args) throws Exception {
+    Main main = new Main();
+    main.inquireKiralikDaire.inquireDaireler();
    /* Document doc = Jsoup.connect(baseUrl).get();
     String title = doc.title();
     System.out.println(title);
@@ -41,5 +44,6 @@ public class Main {
     System.out.println(str);
 
 */
+
   }
 }
